@@ -1,4 +1,4 @@
-#!/home/noahmcdonough/Histogram/venv/bin/python
+#!/home/noahmcdonough/Documents/histogram/venv/bin/python
 
 import sys
 import getopt

@@ -2,11 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=, initial-scale=1.0">
+    <meta name="viewport" initial-scale="1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Histogram</title>
+    <link
+    href="http://cdn.pydata.org/bokeh/release/bokeh-0.12.14.min.css"
+    rel="stylesheet" type="text/css">
+<link
+    href="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.14.min.css"
+    rel="stylesheet" type="text/css">
+<link
+    href="http://cdn.pydata.org/bokeh/release/bokeh-tables-0.12.14.min.css"
+    rel="stylesheet" type="text/css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="http://cdn.pydata.org/bokeh/release/bokeh-0.12.14.js"></script>
+<script src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.14.js"></script>
+<script src="http://cdn.pydata.org/bokeh/release/bokeh-tables-0.12.14.js"></script>
 </head>
 <body>
-    
+    <div id="myplot">
+        <h1>{{hist}}</h1>
+    </div>
 </body>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            console.log("JS running");
+        })
+
+        {% comment %} document.getElementById("myplot").innerHTML = '{{hist}}' {% endcomment %}
+    </script>
+    <script>
+        $.get(
+            url="histogram",
+            success = data => {
+                var info = data['hist']
+                console.log(JSON.parse(info))
+                Bokeh.embed.embed_items(JSON.parse(info), "myplot")
+            })
+        /*fetch('/histogram')
+            .then(response => {
+                console.log(JSON.parse(response))
+                Bokeh.embed.embed_items(response, "myplot")
+            })*/
+            
+    </script>
 </html>
