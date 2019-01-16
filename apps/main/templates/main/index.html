@@ -6,20 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Graph</title>
     <script src="https://d3js.org/d3.v3.min.js"></script>
-    <script src="graphing.js"></script>
+    {% load static %}
+    <script src="{% static 'main/graphing.js' %}"></script>
     <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+    <script
+			  src="https://code.jquery.com/jquery-3.3.1.js"
+			  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+			  crossorigin="anonymous"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <svg></svg>
     <script>
-        var data = []
-        for (let x = 0; x < 3000; x++){
-            data.push(Math.ceil(Math.random() * 10000000));
-        }
-        var bins = 20;
-        //makeHistogram(data, bins);
-        exampleHistogram(data, bins);
+        var data;
+        $.get('/histogram', d => {
+                console.log(d);
+            })
     </script>
 </body>
 </html>

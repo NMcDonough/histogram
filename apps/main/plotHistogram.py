@@ -28,21 +28,7 @@ def setBinVals(arr, bins):
        return newarr
 
 def getData():
-       rawData = parseExcelFile("histogram-data.xlsx", False)
-       filteredData = []
-
-       for key in rawData:
-              if rawData[key]['total_revenue'] < 5000000 and random.randint(0,1) < 0.5:
-                     filteredData.append(rawData[key]['total_revenue'])
-
-       histData = np.histogram(filteredData, 45)
-       histDataFinal = [histData[0], setBinVals(histData[1], 0), []]
-       for x in range(0, len(histDataFinal[1])):
-              try:
-                     histDataFinal[2].append(histDataFinal[1][x + 1] - 0.01)
-              except:
-                     break
-       return histDataFinal
+       return parseExcelFile("histogram-data.xlsx", False);
 
 # TODO: this method
 def update(attr, old, new):

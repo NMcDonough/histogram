@@ -26,7 +26,7 @@ def parseExcelFile(wb, printValues):
     keys = getKeys(worksheet)
     y=1
 
-    while (y<10000):
+    while (y<1000):
         newEntry = {}
         for x in range(1, len(keys)):
             newEntry[keys[x]] = worksheet.cell(y,x).value

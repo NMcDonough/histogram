@@ -1,16 +1,11 @@
 from django.shortcuts import render, HttpResponse
-from .plotHistogram import createHistogram
+from .excelParser import parseExcelFile
 import json
 
 def index(req):
-    hist = createHistogram()
-    test = "Noah"
-    context = {
-        "hist": hist,
-        'test': test
-    }
-
-    return render(req, 'main/index.html', context)
+    return render(req, 'main/index.html')
 
 def histogram(req):
-    return HttpResponse(json.dumps({"hist": createHistogram()}), content_type="application/json")
+    data = parseExcelFile("histogram-data.xlsx", False)
+    print(data)
+    return HttpResponse(json.dumps({'data': data}), content_type="application/json")
