@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Graph</title>
-    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
     {% load static %}
     <script src="{% static 'main/graphing.js' %}"></script>
     <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
@@ -13,14 +13,19 @@
 			  src="https://code.jquery.com/jquery-3.3.1.js"
 			  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
 			  crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{% static '/main/styles.css' %}">
 </head>
 <body>
-    <svg></svg>
+    <svg width="960" height="500"></svg>
     <script>
         var data;
+        
         $.get('/histogram', d => {
-                console.log(d);
+                return d;
+            }).then(d => {
+                data = d['data'];
+                console.log(data);
+                exampleHistogram(data);
             })
     </script>
 </body>
