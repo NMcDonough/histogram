@@ -15,6 +15,9 @@ def histogram(req):
 
     df = pd.read_excel(xlfile, 0)
     dfRevenue = df[revenueColumn].values
-    print(dfRevenue)
+    final = []
+    for x in dfRevenue.tolist():
+        if x < 10000000:
+            final.append(x)
 
-    return HttpResponse(json.dumps({'data': dfRevenue.tolist()}), content_type="application/json")
+    return HttpResponse(json.dumps({'data': final}), content_type="application/json")

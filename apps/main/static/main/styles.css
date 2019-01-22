@@ -6,6 +6,9 @@ rect:hover{
     fill: red;
 }
 
+rect{
+  fill: green;
+}
 .d3-tip {
     line-height: 1;
     font-weight: bold;
@@ -34,4 +37,9 @@ rect:hover{
     margin: -1px 0 0 0;
     top: 100%;
     left: 0;
+  }
+
+#graph {
+    margin-top: 100px;
+    margin-left: 50px;
   }
