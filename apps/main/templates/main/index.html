@@ -5,29 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Graph</title>
-    <script src="https://d3js.org/d3.v4.min.js"></script>
+
     {% load static %}
+    <script src="https://d3js.org/d3.v4.js"></script>
     <script src="{% static 'main/graphing.js' %}"></script>
+    <script src="{% static 'main/objHist.js' %}"></script>
     <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
     <script
 			  src="https://code.jquery.com/jquery-3.3.1.js"
 			  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
 			  crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{% static '/main/styles.css' %}">
-    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 </head>
 <body>
+    <form id='form' oninput="reload(event)">
+        {%csrf_token%}
+        <select name="" id="field">
+            <option value="total_revenue" selected="selected" class="field">Total Revenues</option>
+            <option value="total_expenses"class="field">Total Expenses</option>
+            <option value="government_grants"class="field">Government Grants</option>
+            <option value="revenues_less_expenses"class="field">Revenueless Expenses</option>
+            <option value="gross_receipts"class="field" disabled>Gross Receipts</option>
+        </select>
+    </form>
+    <div id="tooltip" class="hidden"></div>
     <svg id="graph" width="960" height="500"></svg>
     <script>
         var data;
-        
-        $.get('/histogram', d => {
+        var full;
+
+        $.get('/histogram',
+            {data : 10000},
+            d => {
+                //console.log(d);
                 return d;
             }).then(d => {
                 data = d['data'];
-                console.log(data);
-                exampleHistogram(data);
+                full = JSON.parse(d['fulldata']);
+                objHist(full, "total_revenue", 0);
+                exampleHistogram(data, "total_revenue");
             })
+        
+        function reload(e) {
+            removeHistogram();
+            var element = e.srcElement;
+            var selected = element.value;
+            data = Object.values(full[selected])
+            exampleHistogram(data)
+        }
     </script>
 </body>
 </html>
