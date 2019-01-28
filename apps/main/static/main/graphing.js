@@ -11,13 +11,6 @@ function exampleHistogram(data) {
         .domain([data[0][0].x0, data[0][data[0].length - 1].x1])
         .range([0, width]);
 
-    // var bins = d3.histogram()
-    //     .domain(x.domain())
-    //     .thresholds(x.ticks(20))
-    //     (data);
-
-    // console.log(bins)
-
     var y = d3.scaleLinear()
         .domain([0, d3.max(data[0], function(d) { return d.length; })])
         .range([height, 0]);
