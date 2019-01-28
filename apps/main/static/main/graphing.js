@@ -26,19 +26,6 @@ function exampleHistogram(data) {
         .attr("transform", function(d) {
             return "translate(" + x(d.x0) + "," + y(d.length) + ")";
         })
-    
-    .on('click', d => {
-        tip.transition()
-            .duration(200)
-            .style("opacity", 0.9);
-        tip.html(h => {return makeGraph(d)}
-        )
-    })
-    .on("clickt", function(d) {
-            tip.transition()
-            .duration(500)
-            .style("opacity", 0);
-            });
 
     bar.append("rect")
         .attr("x", 1)
@@ -52,6 +39,23 @@ function exampleHistogram(data) {
         .attr("text-anchor", "middle")
         .attr("font-size", "12")
         .text(function(d) { return formatCount(d.length); });
+    
+    bar.on('click', d => {
+        var selected = d3.select(".tooltip").node();
+        if(selected['style']['opacity'] == 0) {
+            tip.transition()
+            .duration(200)
+            .style("opacity", 0.9);
+            tip.html(h => {return makeGraph(d)})
+        } else {
+            tip.transition()
+                .duration(500)
+                .style("opacity", 0)
+                .style("height", 0)
+            tip.html("<br>")
+        }
+
+    })
 
     g.append("g")
         .attr("class", "axis axis--x")
@@ -61,11 +65,16 @@ function exampleHistogram(data) {
 
 function removeHistogram() {
     d3.select('svg').remove();
+    d3.select(".tooltip").remove();
+
     d3.select('body')
         .append('svg')
         .attr("width","1000")
         .attr("height", "500")
         .attr("id", "Graph")
+    d3.select("body")
+        .append("div")
+        .attr("class", "tooltip")
 }
 
 function makeGraph(data) {

@@ -10,7 +10,6 @@
     <script src="https://d3js.org/d3.v4.js"></script>
     <script src="{% static 'main/graphing.js' %}"></script>
     <script src="{% static 'main/objHist.js' %}"></script>
-    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
     <script
 			  src="https://code.jquery.com/jquery-3.3.1.js"
 			  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
@@ -33,7 +32,6 @@
     <svg id="graph" width="960" height="500"></svg>
     <div class='tooltip'></div>
     <script>
-        var data;
         var full;
 
         $.get('/histogram',
@@ -42,18 +40,16 @@
                 //console.log(d);
                 return d;
             }).then(d => {
-                data = d['data'];
                 full = JSON.parse(d['fulldata']);
                 objHist(full, "total_revenue", 0);
-                //exampleHistogram(data, "total_revenue");
             })
         
         function reload(e) {
             removeHistogram();
             var element = e.srcElement;
             var selected = element.value;
-            data = Object.values(full[selected])
-            exampleHistogram(data)
+
+            objHist(full, selected, 0)
         }
     </script>
 </body>

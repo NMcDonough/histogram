@@ -17,7 +17,6 @@ def histogram(req):
 
     df = pd.read_excel(xlfile, 0)
     orgFinal = df.loc[df[revenueColumn] < filterAmount] # Data is now filtered to organizations whose revenue is less than filterAmount
-    print(req.body)
     dfRevenue = orgFinal[revenueColumn].values
 
     return HttpResponse(json.dumps({'data': dfRevenue.tolist(), 'fulldata': orgFinal.to_json()}), content_type="application/json")
