@@ -14,7 +14,9 @@
     <script
 			  src="https://code.jquery.com/jquery-3.3.1.js"
 			  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-			  crossorigin="anonymous"></script>
+              crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static '/main/styles.css' %}">
 </head>
 <body>
@@ -28,8 +30,8 @@
             <option value="gross_receipts"class="field" disabled>Gross Receipts</option>
         </select>
     </form>
-    <div id="tooltip" class="hidden"></div>
     <svg id="graph" width="960" height="500"></svg>
+    <div class='tooltip'></div>
     <script>
         var data;
         var full;
@@ -43,7 +45,7 @@
                 data = d['data'];
                 full = JSON.parse(d['fulldata']);
                 objHist(full, "total_revenue", 0);
-                exampleHistogram(data, "total_revenue");
+                //exampleHistogram(data, "total_revenue");
             })
         
         function reload(e) {

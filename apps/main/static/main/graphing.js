@@ -1,7 +1,6 @@
 function exampleHistogram(data) {
     // var parsed = JSON.parse(data);
     var formatCount = d3.format("0,");
-
     var svg = d3.select("svg"),
         margin = {top: 10, right: 30, bottom: 30, left: 30},
         width = +svg.attr("width") - margin.left - margin.right,
@@ -9,24 +8,44 @@ function exampleHistogram(data) {
         g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     var x = d3.scaleLinear()
-        .domain([d3.min(data), d3.max(data)])
+        .domain([data[0][0].x0, data[0][data[0].length - 1].x1])
         .range([0, width]);
 
-    var bins = d3.histogram()
-        .domain(x.domain())
-        .thresholds(x.ticks(20))
-        (data);
+    // var bins = d3.histogram()
+    //     .domain(x.domain())
+    //     .thresholds(x.ticks(20))
+    //     (data);
+
+    // console.log(bins)
 
     var y = d3.scaleLinear()
-        .domain([0, d3.max(bins, function(d) { return d.length; })])
+        .domain([0, d3.max(data[0], function(d) { return d.length; })])
         .range([height, 0]);
-    
+
+    var tip = d3.select(".tooltip")
+    .style("opacity", 0)
+
     var bar = g.selectAll(".bar")
-    .data(bins)
+    .data(data[1])
     .enter()
     .append("g")
         .attr("class", "bar")
-        .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
+        .attr("transform", function(d) {
+            return "translate(" + x(d.x0) + "," + y(d.length) + ")";
+        })
+    
+    .on('click', d => {
+        tip.transition()
+            .duration(200)
+            .style("opacity", 0.9);
+        tip.html(h => {return makeGraph(d)}
+        )
+    })
+    .on("clickt", function(d) {
+            tip.transition()
+            .duration(500)
+            .style("opacity", 0);
+            });
 
     bar.append("rect")
         .attr("x", 1)
@@ -35,9 +54,10 @@ function exampleHistogram(data) {
 
     bar.append("text")
         .attr("dy", ".75em")
-        .attr("y", -15)
-        .attr("x", (x(bins[0].x1) - x(bins[0].x0)) / 2)
+        .attr("y", -20)
+        .attr("x", 5)
         .attr("text-anchor", "middle")
+        .attr("font-size", "12")
         .text(function(d) { return formatCount(d.length); });
 
     g.append("g")
@@ -53,4 +73,29 @@ function removeHistogram() {
         .attr("width","1000")
         .attr("height", "500")
         .attr("id", "Graph")
+}
+
+function makeGraph(data) {
+    var keys = Object.keys(data[0]);
+    var table = "<table class='table table-striped'>";
+    var header = "<thead><tr>"
+    var body ="<tbody>"
+
+    for(let x = 0; x < keys.length; x++) {
+        header += "<th>" + keys[x] + "</th>"
+    }
+
+    header += "</tr></thead>"
+
+    for(let x = 0; x < data.length; x++) {
+        body += "<tr>"
+        for(let key = 0; key < keys.length; key++){
+            body += "<td>" + data[x][keys[key]] + "</td>"
+        }
+        body += "</tr>"
+    }
+    body +="</tbody></table>"
+
+    table += header + body;
+    return table;
 }
