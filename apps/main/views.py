@@ -10,7 +10,7 @@ def index(req):
 
 def histogram(req):
     binCount = 20
-    xlfile = '/home/noahmcdonough/Documents/histogram/apps/main/histogram_data.xlsx'
+    xlfile = '/Users/noah/Documents/Projects/Python/histogram/apps/main/histogram_data.xlsx'
     #output_file('output_file_test.html',title='Total Revenue Figure')
     revenueColumn = 'total_revenue'
     filterAmount = 10000000

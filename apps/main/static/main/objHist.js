@@ -18,6 +18,7 @@ function objectify(obj) {
     }
 
     var sanitized = objArr.filter(obj => obj['total_revenue'] != undefined)
+    // sanitized = sanitized.filter(obj => obj['total_revenue'] < 400000 && obj['total_revenue'] > 0)
     return sanitized;
 }
 

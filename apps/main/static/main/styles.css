@@ -39,3 +39,14 @@ rect{
   font-size: 16px;
   line-height: 20px;
 }
+
+body{
+  padding-left: 75px;
+  padding-top: 25px;
+}
+
+p{
+  display: flex;
+  justify-content: space-between;
+  width: 150px;
+}
